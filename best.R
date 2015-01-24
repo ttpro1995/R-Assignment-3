@@ -8,10 +8,15 @@ best <- function(state, outcome) {
 #heart failure = 17
 # Pneumonia = 23
 
+if (state=="NN") # it's work
+  stop("invalid state")
+
 
   ## Read outcome data
   data <-  read.csv("outcome-of-care-measures.csv", colClasses = "character")
-
+data[, 11] <- as.numeric(data[, 11])
+data[, 17] <- as.numeric(data[, 17])
+data[, 23] <- as.numeric(data[, 23])
  data<-data[order(data[[cc]],data[[2]]),]
  
   ## Check that state and outcome are valid
