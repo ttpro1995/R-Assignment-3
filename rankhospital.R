@@ -17,7 +17,21 @@ rankhospital <- function(state, outcome, num = "best") {
   data[, 11] <- as.numeric(data[, 11])
   data[, 17] <- as.numeric(data[, 17])
   data[, 23] <- as.numeric(data[, 23])
-  data<-data[order(data[[cc]],data[[2]],na.last=FALSE),]
+  nalast<-TRUE
+  if (class(num)=="character")
+  {if (num=="best")
+    
+    choice<-1
+     
+  }
+   else
+     if (num=="worst")
+       {choice <-row
+        nalast<-FALSE
+  }
+  else
+    choice <-num
+  data<-data[order(data[[cc]],data[[2]],na.last=nalast),]
   
   ## Check that state and outcome are valid
   ## Return hospital name in that state with lowest 30-day death
@@ -28,16 +42,10 @@ rankhospital <- function(state, outcome, num = "best") {
   subdata<-subset(data,State==state)
   subdata
   row <-nrow(subdata)
-  if (class(num)=="character")
-    {if (num=="best")
-      choice<-1
-     else
-     if (num=="worst")
-       choice <-row
-  }
-  else
-    choice <-num
+if (choice <= row)
   hos_data<-as.vector(subdata[[choice,2]])
+else
+  hos_data<-NA
   hos_data
-  subdata
+ # subdata
 }
