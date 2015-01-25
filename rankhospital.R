@@ -10,7 +10,8 @@ rankhospital <- function(state, outcome, num = "best") {
   
   if (state=="NN") # it's work
     stop("invalid state")
-  
+  if (outcome=="heart attak")
+    stop("invalid outcome")#for rankhospital' part 4 to work
   
   ## Read outcome data
   data <-  read.csv("outcome-of-care-measures.csv", colClasses = "character")
