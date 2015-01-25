@@ -10,24 +10,11 @@ rankall <- function(outcome, num = "best") {
   if (outcome == "heart attack") cc<-11
   if (outcome == "heart failure") cc <- 17
   if (outcome == "pneumonia") cc<-23
-  
-  nalast<-TRUE
+  nalast=TRUE
   if (class(num)=="character")
-  {if (num=="best")
-    
-    choice<-1
-   
-  }
-  else
     if (num=="worst")
-    {choice <-row
-     nalast<-FALSE
-    }
-  else
-    choice <-num
+      nalast=FALSE
   data<-data[order(data[[cc]],data[[2]],na.last=nalast),]
-  
-  
   
 
   
@@ -61,7 +48,7 @@ rankall <- function(outcome, num = "best") {
 
 
 
-rankhospitalshort <- function(state,data, choice) {# get in the already sort data frame, return the hospital name
+rankhospitalshort <- function(state,data, num) {# get in the already sort data frame, return the hospital name
   
  
 
@@ -71,13 +58,23 @@ rankhospitalshort <- function(state,data, choice) {# get in the already sort dat
   ## Check that state and outcome are valid
   ## Return hospital name in that state with lowest 30-day death
   ## rate
-  
-  
-  
   subdata<-subset(data,State==state)
-  subdata
-  row <-nrow(subdata)
-  if (choice <= row)
+
+  if (class(num)=="character")
+    if (num=="best")   
+      choice<-1
+  
+  
+  if (class(num)=="character")
+    if (num=="worst")
+    {choice <-nrow(subdata)
+    }
+  if (class(num)=="numeric")
+    choice <-num  
+  
+  
+  
+  if (choice <= nrow(subdata))
     hos_data<-as.vector(subdata[[choice,2]])
   else
     hos_data<-NA
